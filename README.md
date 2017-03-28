@@ -20,6 +20,8 @@ never fall below 25% health.
 So now you can keep a skeleton crew to keep it alive, and have a bunch of cool
 shit parked around your home sector that you actually get to see.
 
+![Durr](http://i.imgur.com/dqjN0Sm.png)
+
 # Install
 
 This mod only really needs to be on the server, but I highly suggest you install
