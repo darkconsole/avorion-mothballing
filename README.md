@@ -20,4 +20,4 @@ never fall below 25% health.
 This mod only really needs to be on the server, but I highly suggest you install
 it client side too.
 
-Copy all the files over to your game or use the patches.
+Copy the data directory to your game or use the patches.
