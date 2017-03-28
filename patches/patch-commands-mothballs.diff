@@ -1,0 +1,20 @@
+--- ../avorion-0.11.0.7844/data/scripts/commands/mothballs.lua	1969-12-31 18:00:00.000000000 -0600
++++ ../avorion-mothballing/data/scripts/commands/mothballs.lua	2017-03-28 17:56:20.796068800 -0500
+@@ -0,0 +1,17 @@
++
++if(onServer())
++then
++
++function execute(PlayerID, Command, Action, ...)
++
++	if(Action == "on")
++	then
++		Player(PlayerID):addScriptOnce("lib/dcc-mothballs/enable.lua")
++	else
++		Player(PlayerID):addScriptOnce("lib/dcc-mothballs/disable.lua")
++	end
++
++	return 0, "", ""
++end
++
++end

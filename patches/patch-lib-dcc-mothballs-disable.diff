@@ -1,0 +1,24 @@
+--- ../avorion-0.11.0.7844/data/scripts/lib/dcc-mothballs/disable.lua	1969-12-31 18:00:00.000000000 -0600
++++ ../avorion-mothballing/data/scripts/lib/dcc-mothballs/disable.lua	2017-03-28 17:56:20.811694200 -0500
+@@ -0,0 +1,21 @@
++
++if(onServer())
++then
++
++function initialize()
++
++	local Ship = Entity(Player().craftIndex)
++
++	if(Ship == nil or Ship.type ~= EntityType.Ship)
++	then
++		print("[Mothballs] You are not currently controlling a ship.")
++		return terminate()
++	end
++
++	Ship:removeScript("lib/dcc-mothballs/mothballed.lua")
++	print("[Mothballs] " .. Ship.name .. " is no longer mothballed.")
++
++	return terminate()
++end
++
++end
