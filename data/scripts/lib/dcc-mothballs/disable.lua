@@ -25,13 +25,6 @@ function initialize()
 	Ship:removeScript("lib/dcc-mothballs/mothballed.lua")
 	print("[Mothballs] " .. Ship.name .. " is no longer mothballed.")
 
-	invokeClientFunction(
-		Player().index,
-		"displayMissionAccomplishedText",
-		"Active Duty",
-		Ship.name .. " now needs a full crew."
-	)
-
 	return terminate()
 end
 

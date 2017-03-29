@@ -31,13 +31,6 @@ function initialize()
 		print("[Mothballs] " .. Ship.name .. " is already mothballed.")
 	end
 
-	invokeClientFunction(
-		Player().index,
-		"displayMissionAccomplishedText",
-		"Mothballed",
-		Ship.name .. " is ready for a skeleton crew."
-	)
-
 	return terminate()
 end
 

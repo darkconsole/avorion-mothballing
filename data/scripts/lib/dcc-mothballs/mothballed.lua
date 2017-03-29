@@ -6,6 +6,11 @@ This script handles the actual mothballing, keeping the ship alive if it does
 not have enough mechanics to do so on its own.
 ----------------------------------------------------------------------------]]--
 
+function ClientShowMessage(Title,Text)
+	displayMissionAccomplishedText(Title,Text)
+	return
+end
+
 if onServer()
 then
 
@@ -30,6 +35,14 @@ function initialize()
 
 	-- when the ship takes damage we want to know about it.
 	Ship:registerCallback("onDamaged","OnDamaged")
+
+	invokeClientFunction(
+		Player(),
+		"ClientShowMessage",
+		"Mothballed",
+		"The " .. Ship.name .. " may now be sustained with a skeleton crew."
+	)
+
 	return
 end
 
