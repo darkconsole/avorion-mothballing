@@ -7,11 +7,17 @@ not have enough mechanics to do so on its own.
 ----------------------------------------------------------------------------]]--
 
 function ClientShowMessage(Title,Text)
+	if(onServer())
+	then
+		invokeClientFunction(Player(),"ClientShowMessage",Title,Text)
+		return
+	end
+
 	displayMissionAccomplishedText(Title,Text)
 	return
 end
 
-if onServer()
+if(onServer())
 then
 
 --------------------------------------------------------------------------------
@@ -33,15 +39,11 @@ function initialize()
 	-- get the thing we attach to hopefully.
 	local Ship = Entity()
 
-	-- when the ship takes damage we want to know about it.
-	Ship:registerCallback("onDamaged","OnDamaged")
-
-	invokeClientFunction(
-		Player(),
-		"ClientShowMessage",
-		"Mothballed",
-		"The " .. Ship.name .. " may now be sustained with a skeleton crew."
-	)
+	if(onServer())
+	then
+		-- when the ship takes damage we want to know about it.
+		Ship:registerCallback("onDamaged","OnDamaged")
+	end
 
 	return
 end
@@ -137,3 +139,4 @@ end
 --------------------------------------------------------------------------------
 
 end
+
