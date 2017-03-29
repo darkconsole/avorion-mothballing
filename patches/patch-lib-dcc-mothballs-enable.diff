@@ -1,30 +1,54 @@
 --- ../avorion-0.11.0.7844/data/scripts/lib/dcc-mothballs/enable.lua	1969-12-31 18:00:00.000000000 -0600
-+++ ../avorion-mothballing/data/scripts/lib/dcc-mothballs/enable.lua	2017-03-28 17:56:20.811694200 -0500
-@@ -0,0 +1,27 @@
++++ ../avorion-mothballing/data/scripts/lib/dcc-mothballs/enable.lua	2017-03-28 21:32:22.768048200 -0500
+@@ -0,0 +1,51 @@
++--[[----------------------------------------------------------------------------
++AVORION: Mothballing
++darkconsole <darkcee.legit@gmail.com>
 +
-+if(onServer())
-+then
++This script enables the script that puts a ship in mothballs.
++----------------------------------------------------------------------------]]--
 +
 +function initialize()
 +
-+	local Ship = Entity(Player().craftIndex)
-+	local Script = "lib/dcc-mothballs/mothballed.lua"
-+
-+	if(Ship == nil or Ship.type ~= EntityType.Ship)
++	if(onServer())
 +	then
-+		print("[Mothballs] You are not currently controlling a ship.")
-+		return terminate()
-+	end
++		local Ship = Entity(Player().craftIndex)
++		local Script = "lib/dcc-mothballs/mothballed.lua"
 +
-+	if(not Ship:hasScript(Script))
-+	then
-+		Ship:addScript(Script)
-+		print("[Mothballs] " .. Ship.name .. " is now mothballed.")
-+	else
-+		print("[Mothballs] " .. Ship.name .. " is already mothballed.")
-+	end
++		if(Ship == nil or Ship.type ~= EntityType.Ship)
++		then
++			print("[Mothballs] You are not currently controlling a ship.")
++			return terminate()
++		end
 +
-+	return terminate()
++		if(not Ship:hasScript(Script))
++		then
++			Ship:addScript(Script)
++			print("[Mothballs] " .. Ship.name .. " is now mothballed.")
++		else
++			print("[Mothballs] " .. Ship.name .. " is already mothballed.")
++		end
++
++		-- ping the client to show a message about it.
++		deferredCallback(
++			1, "WeDoneHereAndThere",
++			"Mothballed",
++			"The " .. Ship.name .. " is ready for a skeleton crew."
++		)
++
++		return
++	end
 +end
 +
++function WeDoneHereAndThere(Title,Text)
++	if(onServer())
++	then
++		invokeClientFunction(Player(),"WeDoneHereAndThere",Title,Text)
++		terminate()
++		return
++	end
++
++	displayMissionAccomplishedText(Title,Text)
++	terminate()
++	return
 +end

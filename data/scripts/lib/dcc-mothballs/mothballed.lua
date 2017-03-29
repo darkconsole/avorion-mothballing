@@ -6,28 +6,11 @@ This script handles the actual mothballing, keeping the ship alive if it does
 not have enough mechanics to do so on its own.
 ----------------------------------------------------------------------------]]--
 
-function ClientShowMessage(Title,Text)
-	if(onServer())
-	then
-		invokeClientFunction(Player(),"ClientShowMessage",Title,Text)
-		return
-	end
-
-	displayMissionAccomplishedText(Title,Text)
-	return
-end
-
-if(onServer())
-then
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
 local Mothballs = {
 	HealMult        = 1.0,  -- multiple of damage done to heal faster
 	BindToMechanics = true, -- only heal if health % lower than mech %
-	Debug           = true  -- show verbose messages.
+	MinMechanics    = 25.0, -- minimum mechanic performance % required
+	Debug           = false -- show verbose messages.
 };
 
 --------------------------------------------------------------------------------
@@ -102,14 +85,23 @@ function Heal(Ship, Amount)
 	local CurrHealth = GetHealthPercent(Ship)
 	local CurrMech = GetMechPercent(Ship)
 
-	-- if enabled, only heal the ship if the ship health is lower than the
-	-- percentage of required mechs on board.
+	-- only heal if we have the minimum mechanic workforce onboard if the min
+	-- value is not zero.
+
+	if(Mothballs.MinMechanics > 0 and CurrMech < Mothballs.MinMechanics)
+	then
+		PrintDebug("Heal(" .. Ship.name .. ") does not have enough mechanics on board (".. CurrMech .."% < ".. Mothballs.MinMechanics .."%)")
+		return
+	end
+
+	-- allow the current health to fall to the mechanic performance ratio if
+	-- bind is enabled.
 
 	if(Mothballs.BindToMechanics)
 	then
 		if(CurrHealth > CurrMech)
 		then
-			PrintDebug("Heal(" .. Ship.name .. ") does not need healing ("..CurrHealth.."%/"..CurrMech.."%)")
+			PrintDebug("Heal(" .. Ship.name .. ") does not need healing (".. CurrHealth .."%/".. CurrMech .."%)")
 			return
 		end
 	end
@@ -131,12 +123,8 @@ end
 function GetMechPercent(Ship)
 -- get the ship's current allotment of mechanics.
 
-	return Ship:getCrewMembers(CrewProfessionType.Repair) / Ship.crew.mechanics
+	-- i do not know why, but the game starts mechs at 20%... so i think this
+	-- is the proper math to make it match the ship crew screen.
+
+	return ((Ship.crew.mechanics / Ship.minCrew.mechanics) * 80) + 20
 end
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
-end
-

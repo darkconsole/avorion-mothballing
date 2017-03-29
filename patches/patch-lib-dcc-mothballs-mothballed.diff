@@ -1,38 +1,21 @@
 --- ../avorion-0.11.0.7844/data/scripts/lib/dcc-mothballs/mothballed.lua	1969-12-31 18:00:00.000000000 -0600
-+++ ../avorion-mothballing/data/scripts/lib/dcc-mothballs/mothballed.lua	2017-03-28 17:56:20.827810400 -0500
-@@ -0,0 +1,139 @@
-+--------------------------------------------------------------------------------
-+-- MOTHBALLING -----------------------------------------------------------------
-+--------------------------------------------------------------------------------
-+-- darkconsole <darkcee.legit@gmail.com> ---------------------------------------
++++ ../avorion-mothballing/data/scripts/lib/dcc-mothballs/mothballed.lua	2017-03-28 22:13:35.940111500 -0500
+@@ -0,0 +1,130 @@
++--[[----------------------------------------------------------------------------
++AVORION: Mothballing
++darkconsole <darkcee.legit@gmail.com>
 +
-+--[[ SEE README.MD FOR DETAILS YO ]]--
-+
-+--------------------------------------------------------------------------------
-+-- STOCK FILE MODIFICATIONS ----------------------------------------------------
-+--------------------------------------------------------------------------------
-+
-+-- none
-+
-+--------------------------------------------------------------------------------
-+--------------------------------------------------------------------------------
-+--------------------------------------------------------------------------------
-+
-+if onServer()
-+then
-+
-+--------------------------------------------------------------------------------
-+--------------------------------------------------------------------------------
-+--------------------------------------------------------------------------------
++This script handles the actual mothballing, keeping the ship alive if it does
++not have enough mechanics to do so on its own.
++----------------------------------------------------------------------------]]--
 +
 +local Mothballs = {
 +	HealMult        = 1.0,  -- multiple of damage done to heal faster
 +	BindToMechanics = true, -- only heal if health % lower than mech %
-+	Debug           = true  -- show verbose messages.
++	MinMechanics    = 25.0, -- minimum mechanic performance % required
++	Debug           = false -- show verbose messages.
 +};
 +
-+--------------------------------------------------------------------------------
-+--------------------------------------------------------------------------------
 +--------------------------------------------------------------------------------
 +
 +function initialize()
@@ -42,8 +25,12 @@
 +	-- get the thing we attach to hopefully.
 +	local Ship = Entity()
 +
-+	-- when the ship takes damage we want to know about it.
-+	Ship:registerCallback("onDamaged","OnDamaged")
++	if(onServer())
++	then
++		-- when the ship takes damage we want to know about it.
++		Ship:registerCallback("onDamaged","OnDamaged")
++	end
++
 +	return
 +end
 +
@@ -58,8 +45,6 @@
 +	return
 +end
 +
-+--------------------------------------------------------------------------------
-+--------------------------------------------------------------------------------
 +--------------------------------------------------------------------------------
 +
 +function OnDamaged(ObjectIndex, Amount, InflictorIndex)
@@ -86,20 +71,6 @@
 +end
 +
 +--------------------------------------------------------------------------------
-+--------------------------------------------------------------------------------
-+--------------------------------------------------------------------------------
-+
-+function GetHealthPercent(Ship)
-+-- get the ship's current health percentage.
-+
-+	return (Ship.durability / Ship.maxDurability) * 100
-+end
-+
-+function GetMechPercent(Ship)
-+-- get the ship's current allotment of mechanics.
-+
-+	return Ship:getCrewMembers(CrewProfessionType.Repair) / Ship.crew.mechanics
-+end
 +
 +function Heal(Ship, Amount)
 +-- heal the ship the specified amount.
@@ -117,14 +88,23 @@
 +	local CurrHealth = GetHealthPercent(Ship)
 +	local CurrMech = GetMechPercent(Ship)
 +
-+	-- if enabled, only heal the ship if the ship health is lower than the
-+	-- percentage of required mechs on board.
++	-- only heal if we have the minimum mechanic workforce onboard if the min
++	-- value is not zero.
++
++	if(Mothballs.MinMechanics > 0 and CurrMech < Mothballs.MinMechanics)
++	then
++		PrintDebug("Heal(" .. Ship.name .. ") does not have enough mechanics on board (".. CurrMech .."% < ".. Mothballs.MinMechanics .."%)")
++		return
++	end
++
++	-- allow the current health to fall to the mechanic performance ratio if
++	-- bind is enabled.
 +
 +	if(Mothballs.BindToMechanics)
 +	then
 +		if(CurrHealth > CurrMech)
 +		then
-+			PrintDebug("Heal(" .. Ship.name .. ") does not need healing ("..CurrHealth.."%/"..CurrMech.."%)")
++			PrintDebug("Heal(" .. Ship.name .. ") does not need healing (".. CurrHealth .."%/".. CurrMech .."%)")
 +			return
 +		end
 +	end
@@ -136,7 +116,18 @@
 +end
 +
 +--------------------------------------------------------------------------------
-+--------------------------------------------------------------------------------
-+--------------------------------------------------------------------------------
 +
++function GetHealthPercent(Ship)
++-- get the ship's current health percentage.
++
++	return (Ship.durability / Ship.maxDurability) * 100
++end
++
++function GetMechPercent(Ship)
++-- get the ship's current allotment of mechanics.
++
++	-- i do not know why, but the game starts mechs at 20%... so i think this
++	-- is the proper math to make it match the ship crew screen.
++
++	return ((Ship.crew.mechanics / Ship.minCrew.mechanics) * 80) + 20
 +end

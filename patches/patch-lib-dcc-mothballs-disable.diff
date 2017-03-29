@@ -1,24 +1,49 @@
 --- ../avorion-0.11.0.7844/data/scripts/lib/dcc-mothballs/disable.lua	1969-12-31 18:00:00.000000000 -0600
-+++ ../avorion-mothballing/data/scripts/lib/dcc-mothballs/disable.lua	2017-03-28 17:56:20.811694200 -0500
-@@ -0,0 +1,21 @@
++++ ../avorion-mothballing/data/scripts/lib/dcc-mothballs/disable.lua	2017-03-28 21:32:49.547022400 -0500
+@@ -0,0 +1,46 @@
++--[[----------------------------------------------------------------------------
++AVORION: Mothballing
++darkconsole <darkcee.legit@gmail.com>
 +
-+if(onServer())
-+then
++This script disables the script that puts a ship in mothballs.
++----------------------------------------------------------------------------]]--
 +
 +function initialize()
 +
-+	local Ship = Entity(Player().craftIndex)
-+
-+	if(Ship == nil or Ship.type ~= EntityType.Ship)
++	if(onServer())
 +	then
-+		print("[Mothballs] You are not currently controlling a ship.")
-+		return terminate()
++		local Ship = Entity(Player().craftIndex)
++		local Script = "lib/dcc-mothballs/mothballed.lua"
++
++		if(Ship == nil or Ship.type ~= EntityType.Ship)
++		then
++			print("[Mothballs] You are not currently controlling a ship.")
++			return terminate()
++		end
++
++		Ship:removeScript(Script)
++		print("[Mothballs] " .. Ship.name .. " is no longer mothballed.")
++
++		-- ping the client to show a message about it.
++		deferredCallback(
++			1, "WeDoneHereAndThere",
++			"Back From Retirement",
++			"The " .. Ship.name .. " now needs a full crew."
++		)
++
++		return
 +	end
-+
-+	Ship:removeScript("lib/dcc-mothballs/mothballed.lua")
-+	print("[Mothballs] " .. Ship.name .. " is no longer mothballed.")
-+
-+	return terminate()
 +end
 +
++function WeDoneHereAndThere(Title,Text)
++	if(onServer())
++	then
++		invokeClientFunction(Player(),"WeDoneHereAndThere",Title,Text)
++		terminate()
++		return
++	end
++
++	displayMissionAccomplishedText(Title,Text)
++	terminate()
++	return
 +end
