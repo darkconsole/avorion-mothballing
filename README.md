@@ -34,11 +34,11 @@ To put the ship you are currently controlling into mothballs use the chat
 command `/mothballs on` - a moment later the message will appear. If not you
 probably didn't install it client side...
 
-![Durr](http://i.imgur.com/mljC7Ky.png)
+![Durr](http://i.imgur.com/qp9sXzS.png)
 
 To take a ship out of mothballs use the chat command `/mothballs off`
 
-![Durr](http://i.imgur.com/I2lBOll.png)
+![Durr](http://i.imgur.com/JjvF86t.png)
 
 While a ship is mothballed you must have at least 25% mechanic workforce. If you
 do not have 25% or more, then nothing will happen and the ship will still blow
