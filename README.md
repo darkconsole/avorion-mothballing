@@ -71,7 +71,7 @@ mothballed at (assuming HealMult = 1).
 
 ## MinMechanics (Float = 25.0)
 
-The minimum mechanic workforce that much be on the ship for mothballing to work.
+The minimum mechanic workforce that must be on the ship for mothballing to work.
 Set this to 0 to disable. Set this to 50 if you want to require they have 50%
 of the normal workforce as a minimum.
 
