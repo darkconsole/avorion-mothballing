@@ -8,7 +8,8 @@
 define('ProjectRoot','..');
 define('StockDir', '/avorion-0.11.0.7844/data/scripts');
 define('ModDir', '/avorion-mothballing/data/scripts');
-define('RemoteDir','z:\home\avorion\steamcmd\avorion\data\scripts');
+define('RemoteDir','Z:\home\avorion\steamcmd\avorion\data\scripts');
+define('LocalDir','D:\Games\Steam\steamapps\common\Avorion\data\scripts');
 
 define('Files',[
 	'/commands/mothballs.lua'           => '/patch-commands-mothballs.diff',
@@ -47,6 +48,15 @@ foreach(Files as $File => $Patch) {
 		escapeshellarg(Pathify(RemoteDir.$File))
 	);
 
-	echo $Command, PHP_EOL;
+	//echo $Command, PHP_EOL;
+	system($Command);
+
+	$Command = sprintf(
+		'xcopy /R /Y %s %s',
+		escapeshellarg(Pathify(ProjectRoot.ModDir.$File)),
+		escapeshellarg(Pathify(LocalDir.$File))
+	);
+
+	//echo $Command, PHP_EOL;
 	system($Command);
 }
