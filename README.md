@@ -20,19 +20,35 @@ never fall below 25% health.
 So now you can keep a skeleton crew to keep it alive, and have a bunch of cool
 shit parked around your home sector that you actually get to see.
 
-![Durr](http://i.imgur.com/dqjN0Sm.png)
-
 # Install
 
-This mod only really needs to be on the server, but I highly suggest you install
-it client side too.
+This mod needs to be on both the client and the server UNLESS the player has
+no intention to ever use it, then the client side can be skipped.
 
-Copy the data directory to your game or use the patches.
+Copy the data directory to your game or use the patches. This mod overwrites
+nothing.
 
-# Activation
+# Usage
 
-While controlling a ship, use the chat commmand `/mothballs on` to enable it
-for that ship, and `/mothballs off` to disable it.
+To put the ship you are currently controlling into mothballs use the chat
+command `/mothballs on` - a moment later the message will appear. If not you
+probably didn't install it client side...
+
+![Durr](http://i.imgur.com/mljC7Ky.png)
+
+To take a ship out of mothballs use the chat command `/mothballs off`
+
+![Durr](http://i.imgur.com/I2lBOll.png)
+
+While a ship is mothballed you must have at least 25% mechanic workforce. If you
+do not have 25% or more, then nothing will happen and the ship will still blow
+itself up eventually.
+
+![Durr](http://i.imgur.com/4zG9ZcS.jpg)
+
+Whatever percentage of mechanic workforce you have, that is how far down the
+health of the ship will be allowed to go. If you have 33% workforce, then the
+ship will stablize at 33% health.
 
 # Configuration
 
@@ -52,6 +68,12 @@ The ship will only heal itself when its health percentage falls below the
 mechanic percentage. So if you leave 25% of the mechanics on, it will never
 fall below 25%. Turning this off the ship will stay at the health it was
 mothballed at (assuming HealMult = 1).
+
+## MinMechanics (Float = 25.0)
+
+The minimum mechanic workforce that much be on the ship for mothballing to work.
+Set this to 0 to disable. Set this to 50 if you want to require they have 50%
+of the normal workforce as a minimum.
 
 ## Debug (Bool = false)
 
