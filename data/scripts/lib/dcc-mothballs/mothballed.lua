@@ -71,18 +71,6 @@ end
 
 --------------------------------------------------------------------------------
 
-function GetHealthPercent(Ship)
--- get the ship's current health percentage.
-
-	return (Ship.durability / Ship.maxDurability) * 100
-end
-
-function GetMechPercent(Ship)
--- get the ship's current allotment of mechanics.
-
-	return Ship:getCrewMembers(CrewProfessionType.Repair) / Ship.crew.mechanics
-end
-
 function Heal(Ship, Amount)
 -- heal the ship the specified amount.
 
@@ -115,6 +103,20 @@ function Heal(Ship, Amount)
 	Ship:heal(Amount, Ship:getPlan().rootIndex, vec3(0,0,0), ObjectIndex)
 
 	return
+end
+
+--------------------------------------------------------------------------------
+
+function GetHealthPercent(Ship)
+-- get the ship's current health percentage.
+
+	return (Ship.durability / Ship.maxDurability) * 100
+end
+
+function GetMechPercent(Ship)
+-- get the ship's current allotment of mechanics.
+
+	return Ship:getCrewMembers(CrewProfessionType.Repair) / Ship.crew.mechanics
 end
 
 --------------------------------------------------------------------------------
