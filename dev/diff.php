@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 define('ProjectRoot','..');
-define('StockDir', '/avorion-0.11.0.7844/data/scripts');
+define('StockDir', '/avorion-stock/data/scripts');
 define('ModDir', '/avorion-mothballing/data/scripts');
 define('PatchDir', '/avorion-mothballing/patches');
 
@@ -15,7 +15,7 @@ define('Files',[
 	'/commands/mothballs.lua'           => '/patch-commands-mothballs.diff',
 	'/lib/dcc-mothballs/enable.lua'     => '/patch-lib-dcc-mothballs-enable.diff',
 	'/lib/dcc-mothballs/disable.lua'    => '/patch-lib-dcc-mothballs-disable.diff',
-	'/lib/dcc-mothballs/mothballed.lua' => '/patch-lib-dcc-mothballs-mothballed.diff'
+	'/lib/dcc-mothballs/main.lua'       => '/patch-lib-dcc-mothballs-main.diff'
 ]);
 
 ////////////////////////////////////////////////////////////////////////////////

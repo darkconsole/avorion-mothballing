@@ -8,7 +8,8 @@ not have enough mechanics to do so on its own.
 
 local Mothballs = {
 	HealMult        = 1.0,  -- multiple of damage done to heal faster
-	BindToMechanics = true, -- only heal if health % lower than mech %
+	MechMult        = 1.0,
+	BindToMechanics = false, -- only heal if health % lower than mech %
 	MinMechanics    = 25.0, -- minimum mechanic performance % required
 	Debug           = false -- show verbose messages.
 };
@@ -126,5 +127,5 @@ function GetMechPercent(Ship)
 	-- i do not know why, but the game starts mechs at 20%... so i think this
 	-- is the proper math to make it match the ship crew screen.
 
-	return ((Ship.crew.mechanics / Ship.minCrew.mechanics) * 80) + 20
+	return (((Ship.crew.mechanics * self.MechMult) / Ship.minCrew.mechanics) * 80) + 20
 end

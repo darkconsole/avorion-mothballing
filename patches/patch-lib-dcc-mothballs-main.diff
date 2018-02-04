@@ -1,6 +1,6 @@
---- ../avorion-0.11.0.7844/data/scripts/lib/dcc-mothballs/mothballed.lua	1969-12-31 18:00:00.000000000 -0600
-+++ ../avorion-mothballing/data/scripts/lib/dcc-mothballs/mothballed.lua	2017-03-28 22:13:35.940111500 -0500
-@@ -0,0 +1,130 @@
+--- ../avorion-stock/data/scripts/lib/dcc-mothballs/main.lua	1969-12-31 18:00:00.000000000 -0600
++++ ../avorion-mothballing/data/scripts/lib/dcc-mothballs/main.lua	2018-02-04 16:15:23.860213800 -0600
+@@ -0,0 +1,131 @@
 +--[[----------------------------------------------------------------------------
 +AVORION: Mothballing
 +darkconsole <darkcee.legit@gmail.com>
@@ -11,7 +11,8 @@
 +
 +local Mothballs = {
 +	HealMult        = 1.0,  -- multiple of damage done to heal faster
-+	BindToMechanics = true, -- only heal if health % lower than mech %
++	MechMult        = 1.0,
++	BindToMechanics = false, -- only heal if health % lower than mech %
 +	MinMechanics    = 25.0, -- minimum mechanic performance % required
 +	Debug           = false -- show verbose messages.
 +};
@@ -129,5 +130,5 @@
 +	-- i do not know why, but the game starts mechs at 20%... so i think this
 +	-- is the proper math to make it match the ship crew screen.
 +
-+	return ((Ship.crew.mechanics / Ship.minCrew.mechanics) * 80) + 20
++	return (((Ship.crew.mechanics * self.MechMult) / Ship.minCrew.mechanics) * 80) + 20
 +end
