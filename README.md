@@ -22,26 +22,40 @@ shit parked around your home sector that you actually get to see.
 
 # Install
 
-This mod needs to be on both the client and the server UNLESS the player has
+### Multiplayer Server Admins:
+
+1. This mod needs to be on both the client and the server UNLESS the player has
 no intention to ever use it, then the client side can be skipped.
 
-Copy the data directory to your game or use the patches. This mod overwrites
+2. Copy the data directory to your game or use the patches. This mod overwrites
 nothing.
+
+3. Copy the `mods/DccMothballing/ConfigDefault.lua` file to `Config.lua` if you
+do not already have one.
+
+### Single Player:
+
+1. Copy the data directory to your game or use the patches. This mod overwrites
+nothing.
+
+2. Copy the `mods/DccMothballing/ConfigDefault.lua` file to `Config.lua` if you
+do not already have one.
+
 
 # Usage
 
 To put the ship you are currently controlling into mothballs use the chat
-command `/mothballs on` - a moment later the message will appear. If not you
+command `/mothball on` - a moment later the message will appear. If not you
 probably didn't install it client side...
 
 ![Durr](http://i.imgur.com/qp9sXzS.png)
 
-To take a ship out of mothballs use the chat command `/mothballs off`
+To take a ship out of mothballs use the chat command `/mothball off`
 
 ![Durr](http://i.imgur.com/JjvF86t.png)
 
-While a ship is mothballed you must have at least 25% mechanic workforce. If you
-do not have 25% or more, then nothing will happen and the ship will still blow
+While a ship is mothballed you must have at least 20% mechanic workforce. If you
+do not have 20% or more, then nothing will happen and the ship will still blow
 itself up eventually.
 
 ![Durr](http://i.imgur.com/4zG9ZcS.jpg)
@@ -53,7 +67,9 @@ ship will stablize at 33% health.
 # Configuration
 
 You can tweak some configuration values to adjust how the mod works. They are
-located in the `lib/dcc-mothballs/mothballed.lua` script.
+located in the `mods/DccMothballs/Config.lua` script. NOTE: this file does not
+exist - after first time installing copy the `ConfigDefault.lua` file in that
+directory to `Config.lua` and you are ready to go.
 
 ## HealMult (Float = 1.0)
 
