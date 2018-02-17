@@ -10,7 +10,7 @@ function initialize()
 	if(onServer())
 	then
 		local Ship = Entity(Player().craftIndex)
-		local Script = "lib/dcc-mothballs/mothballed.lua"
+		local Script = "mods/DccMothballing/Entity/MothballedShip.lua"
 
 		if(Ship == nil or Ship.type ~= EntityType.Ship)
 		then

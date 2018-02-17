@@ -19,9 +19,9 @@ function execute(PlayerID, Command, Action, ...)
 
 	if(Action == "on")
 	then
-		Player(PlayerID):addScriptOnce("lib/dcc-mothballs/enable.lua")
+		Player(PlayerID):addScriptOnce("mods/DccMothballing/Commands/Enable.lua")
 	else
-		Player(PlayerID):addScriptOnce("lib/dcc-mothballs/disable.lua")
+		Player(PlayerID):addScriptOnce("mods/DccMothballing/Commands/Disable.lua")
 	end
 
 	return 0, "", ""

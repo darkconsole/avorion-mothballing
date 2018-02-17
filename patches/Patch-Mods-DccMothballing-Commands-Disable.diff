@@ -1,5 +1,5 @@
---- ../avorion-stock/data/scripts/lib/dcc-mothballs/disable.lua	1969-12-31 18:00:00.000000000 -0600
-+++ ../avorion-mothballing/data/scripts/lib/dcc-mothballs/disable.lua	2017-03-28 21:32:49.547022400 -0500
+--- ../avorion-stock/mods/DccMothballing/Commands/Disable.lua	1969-12-31 18:00:00.000000000 -0600
++++ ../avorion-mothballing/mods/DccMothballing/Commands/Disable.lua	2018-02-17 13:15:17.468000000 -0600
 @@ -0,0 +1,46 @@
 +--[[----------------------------------------------------------------------------
 +AVORION: Mothballing
@@ -13,7 +13,7 @@
 +	if(onServer())
 +	then
 +		local Ship = Entity(Player().craftIndex)
-+		local Script = "lib/dcc-mothballs/mothballed.lua"
++		local Script = "mods/DccMothballing/Entity/MothballedShip.lua"
 +
 +		if(Ship == nil or Ship.type ~= EntityType.Ship)
 +		then

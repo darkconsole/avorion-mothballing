@@ -1,5 +1,5 @@
---- ../avorion-stock/data/scripts/commands/mothballs.lua	1969-12-31 18:00:00.000000000 -0600
-+++ ../avorion-mothballing/data/scripts/commands/mothballs.lua	2017-03-28 18:57:59.438300400 -0500
+--- ../avorion-stock/data/scripts/commands/mothball.lua	1969-12-31 18:00:00.000000000 -0600
++++ ../avorion-mothballing/data/scripts/commands/mothball.lua	2018-02-17 13:20:04.173000000 -0600
 @@ -0,0 +1,34 @@
 +--[[----------------------------------------------------------------------------
 +AVORION: Mothballing
@@ -22,9 +22,9 @@
 +
 +	if(Action == "on")
 +	then
-+		Player(PlayerID):addScriptOnce("lib/dcc-mothballs/enable.lua")
++		Player(PlayerID):addScriptOnce("mods/DccMothballing/Commands/Enable.lua")
 +	else
-+		Player(PlayerID):addScriptOnce("lib/dcc-mothballs/disable.lua")
++		Player(PlayerID):addScriptOnce("mods/DccMothballing/Commands/Disable.lua")
 +	end
 +
 +	return 0, "", ""

@@ -7,15 +7,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 define('ProjectRoot','..');
-define('StockDir', '/avorion-stock/data/scripts');
-define('ModDir', '/avorion-mothballing/data/scripts');
+define('StockDir', '/avorion-stock');
+define('ModDir', '/avorion-mothballing');
 define('PatchDir', '/avorion-mothballing/patches');
 
 define('Files',[
-	'/commands/mothballs.lua'           => '/patch-commands-mothballs.diff',
-	'/lib/dcc-mothballs/enable.lua'     => '/patch-lib-dcc-mothballs-enable.diff',
-	'/lib/dcc-mothballs/disable.lua'    => '/patch-lib-dcc-mothballs-disable.diff',
-	'/lib/dcc-mothballs/main.lua'       => '/patch-lib-dcc-mothballs-main.diff'
+	'/data/scripts/commands/mothball.lua'            => '/Patch-Commands-Mothball.diff',
+	'/mods/DccMothballing/ConfigDefault.lua'         => '/Patch-Mods-DccMothballing-ConfigDefault.diff',
+	'/mods/DccMothballing/Commands/Enable.lua'       => '/Patch-Mods-DccMothballing-Commands-Enable.diff',
+	'/mods/DccMothballing/Commands/Disable.lua'      => '/Patch-Mods-DccMothballing-Commands-Disable.diff',
+	'/mods/DccMothballing/Entity/MothballedShip.lua' => '/Patch-Mods-DccMothballing-Entity-MothballedShip.diff'
 ]);
 
 ////////////////////////////////////////////////////////////////////////////////

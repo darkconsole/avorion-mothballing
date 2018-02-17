@@ -6,13 +6,29 @@ This script handles the actual mothballing, keeping the ship alive if it does
 not have enough mechanics to do so on its own.
 ----------------------------------------------------------------------------]]--
 
-local Mothballs = {
-	HealMult        = 1.0,  -- multiple of damage done to heal faster
-	MechMult        = 1.0,
-	BindToMechanics = false, -- only heal if health % lower than mech %
-	MinMechanics    = 25.0, -- minimum mechanic performance % required
-	Debug           = false -- show verbose messages.
-};
+if(not onServer())
+then return end
+
+package.path = package.path
+..";data/scripts/lib/?.lua"
+
+require("utility")
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+local ConfigOK, Config = pcall(
+	require,
+	'mods.DccMothballing.Config'
+)
+
+if(not ConfigOK)
+then
+	print("[DccMothballing] Error loading Config.lua - did you copy ConfigDefault.lua?")
+else
+	if(Config.Debug)
+	then printTable(Config) end
+end
 
 --------------------------------------------------------------------------------
 
@@ -23,11 +39,8 @@ function initialize()
 	-- get the thing we attach to hopefully.
 	local Ship = Entity()
 
-	if(onServer())
-	then
-		-- when the ship takes damage we want to know about it.
-		Ship:registerCallback("onDamaged","OnDamaged")
-	end
+	-- when the ship takes damage we want to know about it.
+	Ship:registerCallback("onDamaged","OnDamaged")
 
 	return
 end
@@ -35,9 +48,9 @@ end
 function PrintDebug(Message)
 -- print these messages if debug mode is on.
 
-	if(Mothballs.Debug)
+	if(Config.Debug)
 	then
-		print("[Mothballs] " .. Message)
+		print("[DccMothballing] " .. Message)
 	end
 
 	return
@@ -45,17 +58,17 @@ end
 
 --------------------------------------------------------------------------------
 
-function OnDamaged(ObjectIndex, Amount, InflictorIndex)
+function OnDamaged(EntityID, Amount, From)
 -- when this ship takes damage, heal it back, if it was not damage done by a
 -- third party source. this will neutralize the decay the game does when there
 -- are no mechanics on board.
 
-	local Ship = Entity(ObjectIndex)
+	local Ship = Entity(EntityID)
 
 	-- i only care about self inflicted damage, that caused by not having
 	-- enough mechanics.
 
-	if(InflictorIndex ~= nil)
+	if(From.number ~= 0)
 	then
 		return
 	end
@@ -82,33 +95,33 @@ function Heal(Ship, Amount)
 	-- spot on the block where the game might spawn particles or something.
 	-- seems about as plausable as any i would guess.
 
-	local Amount = Amount * Mothballs.HealMult
+	local Amount = Amount * Config.HealMult
 	local CurrHealth = GetHealthPercent(Ship)
 	local CurrMech = GetMechPercent(Ship)
 
 	-- only heal if we have the minimum mechanic workforce onboard if the min
 	-- value is not zero.
 
-	if(Mothballs.MinMechanics > 0 and CurrMech < Mothballs.MinMechanics)
+	if(Config.MinMechanics > 0 and CurrMech < Config.MinMechanics)
 	then
-		PrintDebug("Heal(" .. Ship.name .. ") does not have enough mechanics on board (".. CurrMech .."% < ".. Mothballs.MinMechanics .."%)")
+		PrintDebug("Heal(" .. Ship.name .. ") does not have enough mechanics on board (".. CurrMech .."% < ".. Config.MinMechanics .."%)")
 		return
 	end
 
 	-- allow the current health to fall to the mechanic performance ratio if
 	-- bind is enabled.
 
-	if(Mothballs.BindToMechanics)
+	if(Config.BindToMechanics)
 	then
 		if(CurrHealth > CurrMech)
 		then
-			PrintDebug("Heal(" .. Ship.name .. ") does not need healing (".. CurrHealth .."%/".. CurrMech .."%)")
+			PrintDebug("Heal(" .. Ship.name .. ") does not need healing (".. CurrHealth .."% / ".. CurrMech .."%)")
 			return
 		end
 	end
 
 	PrintDebug("Heal(): " .. Ship.name .. " (Health: " .. CurrHealth .. "%, Mechs: " .. CurrMech .. "%) +" .. Amount)
-	Ship:heal(Amount, Ship:getPlan().rootIndex, vec3(0,0,0), ObjectIndex)
+	Ship:heal(Amount, Ship:getPlan().rootIndex, vec3(0,0,0), Ship.id)
 
 	return
 end
@@ -127,5 +140,5 @@ function GetMechPercent(Ship)
 	-- i do not know why, but the game starts mechs at 20%... so i think this
 	-- is the proper math to make it match the ship crew screen.
 
-	return (((Ship.crew.mechanics * self.MechMult) / Ship.minCrew.mechanics) * 80) + 20
+	return (((Ship.crew.mechanics * Config.MechMult) / Ship.minCrew.mechanics) * 80) + 20
 end
