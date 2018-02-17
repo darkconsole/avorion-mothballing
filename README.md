@@ -71,7 +71,7 @@ located in the `mods/DccMothballs/Config.lua` script. NOTE: this file does not
 exist - after first time installing copy the `ConfigDefault.lua` file in that
 directory to `Config.lua` and you are ready to go.
 
-## HealMult (Float = 1.0)
+## HealMult (Float = 1.05)
 
 By default the ship heals the exact amount of damage it takes. Values greater
 than one will allow the ship to heal more damage than it takes to keep it fully
@@ -85,7 +85,7 @@ mechanic percentage. So if you leave 25% of the mechanics on, it will never
 fall below 25%. Turning this off the ship will stay at the health it was
 mothballed at (assuming HealMult = 1).
 
-## MinMechanics (Float = 25.0)
+## MinMechanics (Float = 20.0)
 
 The minimum mechanic workforce that must be on the ship for mothballing to work.
 Set this to 0 to disable. Set this to 50 if you want to require they have 50%
