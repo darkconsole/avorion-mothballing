@@ -27,7 +27,7 @@ shit parked around your home sector that you actually get to see.
 1. This mod needs to be on both the client and the server UNLESS the player has
 no intention to ever use it, then the client side can be skipped.
 
-2. Copy the data directory to your game or use the patches. This mod overwrites
+2. Copy the `data` and `mods` directory to your game or use the patches. This mod overwrites
 nothing.
 
 3. Copy the `mods/DccMothballing/ConfigDefault.lua` file to `Config.lua` if you
@@ -35,7 +35,7 @@ do not already have one.
 
 ### Single Player:
 
-1. Copy the data directory to your game or use the patches. This mod overwrites
+1. Copy the `data` and `mods` directory to your game or use the patches. This mod overwrites
 nothing.
 
 2. Copy the `mods/DccMothballing/ConfigDefault.lua` file to `Config.lua` if you
