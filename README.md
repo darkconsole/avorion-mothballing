@@ -1,6 +1,6 @@
 # Avorion Mothballing
 
-![Avorion Version](https://img.shields.io/badge/avorion-0.11.0.7844-red.svg)
+![Minimum Avorion Version](https://img.shields.io/badge/avorion-0.15.8.10262-red.svg)
 
 > ***/ˈmôTHˌbôl/***
 >
