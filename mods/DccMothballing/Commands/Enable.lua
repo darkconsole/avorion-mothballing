@@ -5,6 +5,16 @@ darkconsole <darkcee.legit@gmail.com>
 This script enables the script that puts a ship in mothballs.
 ----------------------------------------------------------------------------]]--
 
+package.path = package.path
+.. ";data/scripts/lib/?.lua"
+.. ";data/scripts/sector/?.lua"
+.. ";data/scripts/?.lua"
+
+require("utility")
+require("callable")
+
+local This = {}
+
 function initialize()
 
 	if(not onServer())
@@ -60,7 +70,7 @@ function initialize()
 
 	-- ping the client to show a message about it.
 	deferredCallback(
-		1, "WeDoneHereAndThere",
+		1, "MothballEnable_WeDoneHereAndThere",
 		"Mothballed",
 		"The " .. Ship.name .. " is ready for a skeleton crew."
 	)
@@ -68,10 +78,10 @@ function initialize()
 	return
 end
 
-function WeDoneHereAndThere(Title,Text)
+function MothballEnable_WeDoneHereAndThere(Title,Text)
 	if(onServer())
 	then
-		invokeClientFunction(Player(),"WeDoneHereAndThere",Title,Text)
+		invokeClientFunction(Player(),"MothballEnable_WeDoneHereAndThere",Title,Text)
 		terminate()
 		return
 	end
@@ -80,3 +90,5 @@ function WeDoneHereAndThere(Title,Text)
 	terminate()
 	return
 end
+
+callable(nil,"MothballEnable_WeDoneHereAndThere")
