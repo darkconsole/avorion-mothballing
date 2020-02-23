@@ -10,12 +10,14 @@ package.path = package.path
 .. ";data/scripts/sector/?.lua"
 .. ";data/scripts/?.lua"
 
-require("utility")
-require("callable")
+include("utility")
+include("callable")
 
 local This = {}
 
 function initialize()
+
+	print("[DccMothballing] Disable Command by " .. Player().index)
 
 	if(not onServer())
 	then return end

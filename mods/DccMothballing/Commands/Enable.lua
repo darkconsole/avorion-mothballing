@@ -10,12 +10,14 @@ package.path = package.path
 .. ";data/scripts/sector/?.lua"
 .. ";data/scripts/?.lua"
 
-require("utility")
-require("callable")
+include("utility")
+include("callable")
 
 local This = {}
 
 function initialize()
+
+	print("[DccMothballing] Enable Command by " .. Player().index)
 
 	if(not onServer())
 	then return end
@@ -26,8 +28,8 @@ function initialize()
 	-- make sure the server admin successfully created the config file.
 
 	local ConfigOK, Config = pcall(
-		require,
-		'mods.DccMothballing.Config'
+		include,
+		'mods/DccMothballing/Config'
 	)
 
 	if(not ConfigOK)

@@ -19,8 +19,10 @@ function execute(PlayerID, Command, Action, ...)
 
 	if(Action == "on")
 	then
+		print("[DccMothballing] Adding Script")
 		Player(PlayerID):addScriptOnce("mods/DccMothballing/Commands/Enable.lua")
 	else
+		print("[DccMothballing] Removing Script")
 		Player(PlayerID):addScriptOnce("mods/DccMothballing/Commands/Disable.lua")
 	end
 

@@ -12,14 +12,14 @@ then return end
 package.path = package.path
 ..";data/scripts/lib/?.lua"
 
-require("utility")
+include("utility")
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 local ConfigOK, Config = pcall(
-	require,
-	'mods.DccMothballing.Config'
+	include,
+	'mods/DccMothballing/Config'
 )
 
 if(not ConfigOK)
