@@ -29,6 +29,13 @@ function execute(PlayerID, Command, Action, ...)
 	return 0, "", ""
 end
 
+function getDescription()
+	return "Mothballs ship to stop degrading over time"
+end
+
+function getHelp()
+	return "Turns on and off mothballing. Usage:\n/mothball <on>\n"
+end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
